@@ -54,8 +54,12 @@ int main(void) {
       SetTimer(&timer, 1.0f);
     }
 
+    if (counter == 0) {
+      SetWindowFocused();
+    }
+
     sz = snprintf(NULL, 0, "%02d:%02d", counter / 60, counter % 60);
-    buf = (char *)malloc(sz + 1);
+    buf = (char *)calloc(sz + 1, sizeof(char));
     snprintf(buf, sz + 1, "%02d:%02d", counter / 60, counter % 60);
 
     Vector2 pos = MeasureTextEx(GetFontDefault(), buf, 40, 1);
