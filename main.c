@@ -1,3 +1,5 @@
+#define RAYGUI_IMPLEMENTATION
+#include "./raygui.h"
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -63,6 +65,8 @@ int main(void) {
     snprintf(buf, sz + 1, "%02d:%02d", counter / 60, counter % 60);
 
     Vector2 pos = MeasureTextEx(GetFontDefault(), buf, 40, 1);
+
+    GuiButton((Rectangle){24, 24, 120, 30}, "Test");
 
     DrawText(buf, GetScreenWidth() / 2.0f - (pos.x / 2),
              GetScreenHeight() / 2.0f - (pos.y / 2), 40, BLACK);
