@@ -29,6 +29,7 @@ int main(void) {
   const int screenWidth = 800;
   const int screenHeight = 450;
   const int startAngle = 270.0f;
+  bool start = false;
   int endAngle = -90.0f;
   Timer timer = {0};
   int minutes = 25;
@@ -45,12 +46,11 @@ int main(void) {
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
-    if (GetFrameTime() == 0.0f) {
-      SetTimer(&timer, 1.0f);
+    if (start) {
+      UpdateTimer(&timer);
     }
-    UpdateTimer(&timer);
 
-    if (isTimerDone(&timer) && counter > 0) {
+    if (isTimerDone(&timer) && counter > 0 && start) {
       endAngle += increment;
       counter--;
       SetTimer(&timer, 1.0f);
@@ -66,10 +66,14 @@ int main(void) {
 
     Vector2 pos = MeasureTextEx(GetFontDefault(), buf, 40, 1);
 
-    GuiButton((Rectangle){24, 24, 120, 30}, "Test");
+    if (GuiButton((Rectangle){GetScreenWidth() / 2.0f - 57,
+                              GetScreenHeight() / 2.0f + 20, 120, 30},
+                  "Start")) {
+      start = true;
+    }
 
     DrawText(buf, GetScreenWidth() / 2.0f - (pos.x / 2),
-             GetScreenHeight() / 2.0f - (pos.y / 2), 40, BLACK);
+             GetScreenHeight() / 2.0f - (pos.y / 2) - 20, 40, BLACK);
 
     DrawRing((Vector2){GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f}, 90,
              100, startAngle, endAngle, 360, RED);
