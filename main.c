@@ -35,6 +35,8 @@ int main(void) {
   int minutes = 25;
   int counter = 60 * minutes;
   const float increment = 360.0f / counter;
+
+  // Buffer to dynamically allocate text for the timer
   char *buf;
   size_t sz;
 
@@ -60,18 +62,19 @@ int main(void) {
       SetWindowFocused();
     }
 
+    // Set the buffer to the formatted string
     sz = snprintf(NULL, 0, "%02d:%02d", counter / 60, counter % 60);
     buf = (char *)calloc(sz + 1, sizeof(char));
     snprintf(buf, sz + 1, "%02d:%02d", counter / 60, counter % 60);
 
-    Vector2 pos = MeasureTextEx(GetFontDefault(), buf, 40, 1);
-
     if (GuiButton((Rectangle){GetScreenWidth() / 2.0f - 57,
                               GetScreenHeight() / 2.0f + 20, 120, 30},
-                  "Start")) {
-      start = true;
+                  start ? "Pause" : "Start")) {
+      start = !start;
     }
 
+    // Draw timer text
+    Vector2 pos = MeasureTextEx(GetFontDefault(), buf, 40, 1);
     DrawText(buf, GetScreenWidth() / 2.0f - (pos.x / 2),
              GetScreenHeight() / 2.0f - (pos.y / 2) - 20, 40, BLACK);
 
