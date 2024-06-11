@@ -67,10 +67,21 @@ int main(void) {
     buf = (char *)calloc(sz + 1, sizeof(char));
     snprintf(buf, sz + 1, "%02d:%02d", counter / 60, counter % 60);
 
+    // Start/Pause button
     if (GuiButton((Rectangle){GetScreenWidth() / 2.0f - 57,
                               GetScreenHeight() / 2.0f + 20, 120, 30},
                   start ? "Pause" : "Start")) {
       start = !start;
+    }
+
+    // Reset button
+    if (GuiButton((Rectangle){GetScreenWidth() / 2.0f - 10,
+                              GetScreenHeight() / 2.0f + 60, 20, 20},
+                  GuiIconText(ICON_UNDO, ""))) {
+      counter = 60 * minutes;
+      endAngle = -90.0f;
+      start = false;
+      SetTimer(&timer, 0.0f);
     }
 
     // Draw timer text
