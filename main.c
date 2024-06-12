@@ -61,7 +61,7 @@ int main(void) {
     }
 
     if (counter == 0) {
-      if (minutes == 3 && cycle < 4) {
+      if (minutes == 25 && cycle < 4) {
         minutes = 5;
         counter = 60 * minutes;
         increment = 360.0f / counter;
