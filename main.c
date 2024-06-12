@@ -30,11 +30,11 @@ int main(void) {
   const int screenHeight = 225;
   const int startAngle = 270.0f;
   bool start = false;
-  int endAngle = -90.0f;
+  float endAngle = -90.0f;
   Timer timer = {0};
   int minutes = 25;
   int counter = 60 * minutes;
-  float increment = 360.0f / counter;
+  float increment = 360.0f / (60 * minutes);
   Color ringColor = RED;
   int cycle = 1;
 
@@ -55,6 +55,8 @@ int main(void) {
     }
 
     if (isTimerDone(&timer) && counter > 0 && start) {
+      printf("Increment: %f, counter:  %d, endAngle: %f\n", increment, counter,
+             endAngle);
       endAngle += increment;
       counter--;
       SetTimer(&timer, 1.0f);
@@ -64,19 +66,19 @@ int main(void) {
       if (minutes == 25 && cycle < 4) {
         minutes = 5;
         counter = 60 * minutes;
-        increment = 360.0f / counter;
+        increment = 360.0f / (60 * minutes);
         ringColor = GREEN;
       } else if (minutes == 3 && cycle == 4) {
         minutes = 20;
         counter = 60 * minutes;
-        increment = 360.0f / counter;
+        increment = 360.0f / (60 * minutes);
         ringColor = GREEN;
         cycle = 0;
       } else {
         cycle++;
         minutes = 25;
         counter = 60 * minutes;
-        increment = 360.0f / counter;
+        increment = 360.0f / (60 * minutes);
         ringColor = RED;
       }
       SetWindowFocused();
